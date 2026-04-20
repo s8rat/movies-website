@@ -4,4 +4,5 @@ export interface CardInterface {
   title: string;
   rating: number;
   type: string;
+  year: string;
 }

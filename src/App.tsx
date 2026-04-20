@@ -2,15 +2,25 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import Search from "./Components/Search";
 import MovieCard from "./Components/MovieCard";
+import { useDebounce } from "react-use";
 
 function App() {
   const [query, setquery] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [movies, setMovies] = useState([]);
+  const [debouncedQuery, setDebouncedQuery] = useState("");
 
   const API_BASE_URL = "https://api.themoviedb.org/3";
   const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+  useDebounce(
+    () => {
+      setDebouncedQuery(query);
+    },
+    1000,
+    [query],
+  );
 
   useEffect(() => {
     const API_OPTION = {
@@ -21,12 +31,14 @@ function App() {
       },
     };
 
-    const fetchMovies = async () => {
+    const fetchMovies = async (query: string = "") => {
       setIsLoading(true);
       setErrorMsg("");
 
       try {
-        const endPoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+        const endPoint = query
+          ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+          : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
 
         const response = await fetch(endPoint, API_OPTION);
 
@@ -53,8 +65,8 @@ function App() {
       }
     };
 
-    fetchMovies();
-  }, [API_KEY]);
+    fetchMovies(debouncedQuery);
+  }, [API_KEY, debouncedQuery]);
 
   return (
     <main>
@@ -85,6 +97,7 @@ function App() {
                     title={movie.original_title}
                     rating={movie.vote_average}
                     type={"Movie"}
+                    year={movie.release_date}
                   />
                 );
               })}

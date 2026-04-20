@@ -1,6 +1,6 @@
 import type { CardInterface } from "../Ineterfaces/CardInterface";
 
-const MovieCard = ({ img, title, rating, type }: CardInterface) => {
+const MovieCard = ({ img, title, rating, type, year }: CardInterface) => {
   return (
     <div className="movie-card">
       <img
@@ -18,6 +18,8 @@ const MovieCard = ({ img, title, rating, type }: CardInterface) => {
           <p>{rating ? rating.toFixed(1) : "N/A"}</p>
         </div>
         <span>{type}</span>
+        <span>-</span>
+        <span>{year ? year.split("-")[0] : "N/A"}</span>
       </div>
     </div>
   );
