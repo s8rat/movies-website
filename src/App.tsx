@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 import Search from "./Components/Search";
+import MovieCard from "./Components/MovieCard";
 
 function App() {
   const [query, setquery] = useState("");
@@ -69,7 +70,7 @@ function App() {
         </header>
 
         <section className="all-movies">
-          <h2>All Movies</h2>
+          <h2 className="my-15">All Movies</h2>
           {isLoading ? (
             <p className="text-white">Loading..... Wait bihh</p>
           ) : errorMsg ? (
@@ -78,9 +79,13 @@ function App() {
             <ul>
               {movies.map((movie) => {
                 return (
-                  <p key={movie.id} className="text-white">
-                    {movie.title}
-                  </p>
+                  <MovieCard
+                    key={movie.id}
+                    img={movie.poster_path}
+                    title={movie.original_title}
+                    rating={movie.vote_average}
+                    type={"Movie"}
+                  />
                 );
               })}
             </ul>
