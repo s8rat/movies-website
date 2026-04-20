@@ -9,7 +9,7 @@ const Search = ({ query, setQuery }: SearchInterface) => {
   return (
     <div className="search">
       <div>
-        <img src="src/assets/search.svg" alt="Search icon" />
+        <img src="/search.svg" alt="Search icon" />
         <input
           type="text"
           placeholder="search through thousands of movies"
