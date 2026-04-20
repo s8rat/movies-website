@@ -3,12 +3,13 @@ import "./App.css";
 import Search from "./Components/Search";
 import MovieCard from "./Components/MovieCard";
 import { useDebounce } from "react-use";
+import type { MovieInterface } from "./Ineterfaces/MovieInterface";
 
 function App() {
   const [query, setquery] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<MovieInterface[]>([]);
   const [debouncedQuery, setDebouncedQuery] = useState("");
 
   const API_BASE_URL = "https://api.themoviedb.org/3";
